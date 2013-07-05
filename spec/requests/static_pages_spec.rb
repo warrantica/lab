@@ -1,51 +1,28 @@
 require 'spec_helper'
 
-describe "StaticPages" do
-	describe "Home page" do
-		it "should have the content 'Sample App'" do
-			visit '/static_pages/home'
-			page.should have_selector('h1', 
-				:text => "Home")
-		end
+describe "Static pages" do
 
-		it "should have the right title" do
-			visit '/static_pages/home'
-			page.should have_selector('title',
-				:text => "Sample App")
-		end
+  subject { page }
 
-		it "should not have 'Home' in title" do
-			visit '/static_pages/home'
-			page.should_not have_selector(title,
-				:text => "Home")
-		end
-	end
+  describe "Home page" do
+    before { visit root_path }
 
-	describe "About Page" do
-		it "should have the content 'About Us'" do
-			visit '/static_pages/about'
-			page.should have_selector('h1', 
-				:text => "About")
-		end
+    it { should have_selector('h1',    text: 'Sample App') }
+    it { should have_selector('title', text: full_title('')) }
+    it { should_not have_selector 'title', text: '| Home' }
+  end
 
-		it "should have the right title" do
-			visit '/static_pages/about'
-			page.should have_selector('title',
-				:text => "Sample App | About")
-		end
-	end
+  describe "Help page" do
+    before { visit help_path }
 
-	describe "Help Page" do
-		it "should have the content 'Help'" do
-			visit '/static_pages/help'
-			page.should have_selector('h1', 
-				:text => "Help")
-		end
+    it { should have_selector('h1',    text: 'Help') }
+    it { should have_selector('title', text: full_title('Help')) }
+  end
 
-		it "should have the right title" do
-			visit '/static_pages/help'
-			page.should have_selector('title',
-				:text => "Sample App | Help")
-		end
-	end
+  describe "About page" do
+    before { visit about_path }
+
+    it { should have_selector('h1',    text: 'About') }
+    it { should have_selector('title', text: full_title('About Us')) }
+  end
 end
